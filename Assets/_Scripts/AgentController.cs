@@ -5,11 +5,11 @@ using UnityEngine.AI;
 
 public class AgentController : MonoBehaviour
 {
-
     public bool chase = false;
     public Camera cam;
     public NavMeshAgent agent;
     public Transform playerTrans;
+
     void Update() { 
 
         if (chase) {
