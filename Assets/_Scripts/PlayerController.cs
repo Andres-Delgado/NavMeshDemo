@@ -1,24 +1,36 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AI;
+
 
 public class PlayerController : MonoBehaviour
 {
 
-    public Camera cam;
-    public NavMeshAgent agent;
+    #region Variables
 
-    void Update() { 
-        if (Input.GetMouseButtonDown(0))
-        {
-            Ray ray = cam.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
+    [Header("Variables")]
+    [SerializeField] private float speed = 6.0f;
 
-            if (Physics.Raycast(ray, out hit))
-            {
-                agent.SetDestination(hit.point);
-            }
-        }
+    private Rigidbody rbPlayer;
+
+    #endregion
+
+    private void Awake()
+    {
+        rbPlayer = this.GetComponent<Rigidbody>();
+    }
+
+    private void FixedUpdate()
+    {
+        Move();
+
+    }
+
+    private void Move()
+    {
+        float xInput = Input.GetAxisRaw("Horizontal");
+        float zInput = Input.GetAxisRaw("Vertical");
+        Vector3 velocity = new Vector3(xInput, 0, zInput).normalized * speed;
+        rbPlayer.MovePosition(rbPlayer.position + velocity * Time.fixedDeltaTime);
     }
 }
